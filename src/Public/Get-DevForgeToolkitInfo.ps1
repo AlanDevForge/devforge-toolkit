@@ -4,7 +4,7 @@ function Get-DevForgeToolkitInfo {
 
     [pscustomobject]@{
         Name = "DevForgeToolkit"
-        Version = "0.1.0"
+        Version = "0.2.0"
         Purpose = "Manage DevForge HQ knowledge repositories"
     }
 }
