@@ -1,10 +1,20 @@
 function Open-DevForgeRepository {
 <#
 .SYNOPSIS
-Opens a DevForge HQ repository and loads entities into memory.
+Opens a DevForge HQ repository.
+
+.DESCRIPTION
+Loads a DevForge knowledge repository from disk, parses Markdown files with front matter, and returns a DevForgeRepository object containing all discovered entities.
+
+.PARAMETER Path
+The path to the DevForge HQ repository.
 
 .EXAMPLE
 $repo = Open-DevForgeRepository D:\DevForge\Git\devforge-hq
+
+.EXAMPLE
+$repo = Open-DevForgeRepository .\examples\sample-hq
+Show-DevForgeDashboard -Repository $repo
 #>
 
     [CmdletBinding()]

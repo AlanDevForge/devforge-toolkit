@@ -1,0 +1,21 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  test:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout toolkit
+        uses: actions/checkout@v4
+
+      - name: Validate module import
+        shell: pwsh
+        run: |
+          Import-Module ./DevForgeToolkit.psd1 -Force
+          Get-Command -Module DevForgeToolkit
