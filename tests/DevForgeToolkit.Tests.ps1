@@ -1,6 +1,9 @@
 Describe "DevForgeToolkit" {
     $modulePath = Join-Path $PSScriptRoot "..\DevForgeToolkit.psd1"
-    Import-Module $modulePath -Force
+
+    if (-not (Get-Module DevForgeToolkit)) {
+        Import-Module $modulePath
+    }
 
     $sampleRepoPath = Join-Path $PSScriptRoot "..\examples\sample-hq"
     $repo = Open-DevForgeRepository $sampleRepoPath
@@ -14,14 +17,26 @@ Describe "DevForgeToolkit" {
         $repo.Entities.Count | Should Be 2
     }
 
-    It "returns machine entities" {
-        $machines = Get-DevForgeMachine -Repository $repo
-        $machines.Count | Should Be 1
+    It "loads relationships" {
+        $repo.Relationships.Count | Should Be 1
     }
 
-    It "returns product entities" {
-        $products = Get-DevForgeProduct -Repository $repo
-        $products.Count | Should Be 1
+    It "returns dependencies" {
+        $dependencies = Get-DevForgeDependencies `
+            -Repository $repo `
+            -Id "PRD-0001"
+
+        $dependencies.Count | Should Be 1
+        $dependencies[0].Id | Should Be "MCH-0001"
+    }
+
+    It "returns dependents" {
+        $dependents = Get-DevForgeDependents `
+            -Repository $repo `
+            -Id "MCH-0001"
+
+        $dependents.Count | Should Be 1
+        $dependents[0].Id | Should Be "PRD-0001"
     }
 
     It "validates the repository" {

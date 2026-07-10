@@ -72,9 +72,17 @@ Show-DevForgeDashboard -Repository $repo
         $entity.Metadata = $metadata
 
         $repo.Entities.Add($entity)
+
+        if ($entity.Id) {
+            $rels = Get-DevForgeRelationshipFromContent -SourceId $entity.Id -Content $content
+            foreach ($rel in $rels) {
+                $repo.Relationships.Add($rel)
+            }
+        }
     }
 
-    Write-DevForgeInfo "Loaded $($repo.Entities.Count) entities from $($repo.Root)"
+    Write-DevForgeInfo "Loaded $($repo.Entities.Count) entities and $($repo.Relationships.Count) relationships from $($repo.Root)"
 
     return $repo
 }
+

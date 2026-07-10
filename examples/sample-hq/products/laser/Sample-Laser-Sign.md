@@ -8,6 +8,9 @@ updated: 2026-07-09
 tags:
   - laser
   - sign
+relationships:
+  machines:
+    - MCH-0001
 ---
 
 # Sample Laser Sign

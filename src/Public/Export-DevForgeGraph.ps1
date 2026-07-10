@@ -27,6 +27,13 @@ function Export-DevForgeGraph {
         $lines += "    $safeId[`"$label`"]"
     }
 
+    foreach ($relationship in $Repository.GetRelationships()) {
+        $source = $relationship.SourceId -replace "-", ""
+        $target = $relationship.TargetId -replace "-", ""
+        $type = $relationship.Type
+        $lines += "    $source -->|$type| $target"
+    }
+
     $lines += '```'
 
     if ($PSCmdlet.ShouldProcess($Path, "Export graph")) {
